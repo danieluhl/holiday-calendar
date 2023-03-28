@@ -10,18 +10,18 @@
 			getHolidayByNth({ year, sat, sun, month: month - 1, weekday, nth });
 
 	const holidays = {
-		'New Years': bindByDay({ month: 1, day: 1 }),
+		'🎇 New Years': bindByDay({ month: 1, day: 1 }),
 		'Martin Luther King Day': bindByNth({ month: 1, weekday: DAYS.indexOf('Monday'), nth: 3 }),
-		"Presidents' Day": bindByNth({ month: 2, weekday: DAYS.indexOf('Monday'), nth: 3 }),
-		'Memorial Day': bindByNth({ month: 5, weekday: DAYS.indexOf('Monday'), nth: -1 }),
+		"🇺🇸 Presidents' Day": bindByNth({ month: 2, weekday: DAYS.indexOf('Monday'), nth: 3 }),
+		'🇺🇸 Memorial Day': bindByNth({ month: 5, weekday: DAYS.indexOf('Monday'), nth: -1 }),
 		Juneteenth: bindByDay({ month: 6, day: 19 }),
-		'Independence Day': bindByDay({ month: 7, day: 4 }),
+		'🎇 Independence Day': bindByDay({ month: 7, day: 4 }),
 		'Labor Day': bindByNth({ month: 9, weekday: DAYS.indexOf('Monday'), nth: 1 }),
 		"Indigenous People's Day": bindByNth({ month: 10, weekday: DAYS.indexOf('Monday'), nth: 2 }),
-		'Veterens Day': bindByDay({ month: 11, day: 11 }),
-		'Thanksgiving Day': bindByNth({ month: 11, weekday: DAYS.indexOf('Thursday'), nth: 4 }),
-		'Day after Thanksgiving': bindByNth({ month: 11, weekday: DAYS.indexOf('Friday'), nth: 4 }),
-		'Christmas Day': bindByDay({ month: 12, day: 25 })
+		'🇺🇸 Veterens Day': bindByDay({ month: 11, day: 11 }),
+		'🦃 Thanksgiving Day': bindByNth({ month: 11, weekday: DAYS.indexOf('Thursday'), nth: 4 }),
+		'🦃 Day after Thanksgiving': bindByNth({ month: 11, weekday: DAYS.indexOf('Friday'), nth: 4 }),
+		'☃️ Christmas Day': bindByDay({ month: 12, day: 25 })
 	};
 
 	let icsResults = '';
