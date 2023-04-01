@@ -126,67 +126,111 @@ END:VEVENT
 		return `${prefix}${icsHolidays}${postfix}`;
 	};
 
+	function handleDownload(filename, text) {
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		element.setAttribute('download', filename);
+
+		element.style.display = 'none';
+		document.body.appendChild(element);
+
+		element.click();
+
+		document.body.removeChild(element);
+	}
+
 	// NICE TO HAVES
 	// override rules by holiday option
 	// mark federal holidays
 	// add random holidays
 </script>
 
-<h1>Holiday Calendar Generator</h1>
-<p>
-	Business treat different holidays differnently. This tool will help you generate a `.ics` file
-	with all the holidays your company does for the year landing on the right days you have off. You
-	can share this file around with the rest of your company or get a link to the file here (coming
-	soon!).
-</p>
-<form on:submit|preventDefault={handleSubmit}>
-	<h2>Select Year</h2>
-	<select id="year" name="year">
-		{#each years as year}
-			<option value={year}>{year}</option>
-		{/each}
-	</select>
+<main class="py-10 m-auto max-w-xl text-gray-300 bg-slate-800">
+	<h1>Holiday Calendar Generator</h1>
+	<p class="pt-3">
+		Business treat different holidays differnently. This tool will help you generate a `.ics` file
+		with all the holidays your company does for the year landing on the right days you have off. You
+		can share this file around with the rest of your company or get a link to the file here (coming
+		soon!).
+	</p>
 
-	<h2>Select Holidays</h2>
-	<subheading>Please select which holidays your company recognizes</subheading>
-	<ul>
-		{#each Object.keys(holidays) as holiday}
-			<li>
-				<label>
-					<input
-						name={`holiday-${holiday}`}
-						data-type="holiday"
-						type="checkbox"
-						id={holiday}
-						checked
-					/>{holiday}
-				</label>
-			</li>
-		{/each}
-	</ul>
-	<h2>Select Rules</h2>
-	<p>If a holiday lands on Saturday, what day do you take off?</p>
-	<select name="saturdayRules">
-		<option value="friday" selected>Friday</option>
-		<option value="monday">Monday</option>
-	</select>
-	<p>What about for a Sunday?</p>
-	<select name="sundayRules">
-		<option value="friday">Friday</option>
-		<option value="monday" selected>Monday</option>
-	</select>
-	<p>Optional description applied to all events (e.g. "company holiday event")</p>
-	<input type="text" value={description} />
-	<hr />
-	<input type="submit" value="Generate" />
-</form>
+	<form class="flex flex-col items-start pt-10" on:submit|preventDefault={handleSubmit}>
+		<h2>Select Year</h2>
+		<select
+			class="py-2 px-5 my-3 rounded-md ring-2 ring-gray-600 bg-slate-900"
+			id="year"
+			name="year"
+		>
+			{#each years as year}
+				<option value={year}>{year}</option>
+			{/each}
+		</select>
 
-<p>Copy this output into a file with the `.ics` extension and import it into your calendar</p>
-<textarea rows="300" cols="80">{icsResults}</textarea>
+		<h2 class="pt-5">Select Holidays</h2>
+		<subheading>Please select which holidays your company recognizes</subheading>
+		<ul class="py-5">
+			{#each Object.keys(holidays) as holiday}
+				<li class="pb-1 text-lg">
+					<label>
+						<input
+							class="mr-3 text-gray-300 bg-slate-900"
+							name={`holiday-${holiday}`}
+							data-type="holiday"
+							type="checkbox"
+							id={holiday}
+							checked
+						/>{holiday}
+					</label>
+				</li>
+			{/each}
+		</ul>
+		<h2 class="pt-5">Select Rules</h2>
+		<p class="py-3">If a holiday lands on Saturday, what day do you take off?</p>
+		<select
+			name="saturdayRules"
+			class="py-2 px-5 my-3 rounded-md ring-2 ring-gray-600 bg-slate-900"
+		>
+			<option value="friday" selected>Friday</option>
+			<option value="monday">Monday</option>
+		</select>
+		<p>What about for a Sunday?</p>
+		<select name="sundayRules" class="py-2 px-5 my-3 rounded-md ring-2 ring-gray-600 bg-slate-900">
+			<option value="friday">Friday</option>
+			<option value="monday" selected>Monday</option>
+		</select>
+		<p>Optional description applied to all events (e.g. "company holiday event")</p>
+		<input
+			class="self-stretch py-2 px-5 my-3 max-w-xl rounded-md ring-2 ring-gray-600 bg-slate-900"
+			type="text"
+			value={description}
+		/>
+		<input
+			class="self-end py-2 px-5 my-3 bg-green-800 rounded-md ring-2 ring-green-600"
+			type="submit"
+			value="Generate"
+		/>
+	</form>
 
-<style>
-	input,
-	label {
-		cursor: pointer;
-	}
+	<section class="flex flex-col pt-10">
+		<hr class="border-black" />
+		<hr class="border-gray-600" />
+		<textarea
+			class="my-3 mt-5 mb-2 max-w-xl rounded-md ring-2 ring-gray-600 bg-slate-900"
+			rows="10"
+			cols="80">{icsResults}</textarea
+		>
+		<input
+			class="self-end py-2 px-5 my-3 bg-red-900 rounded-md ring-2 ring-red-600"
+			type="submit"
+			value="Download"
+			on:click={handleDownload}
+		/>
+		<p class="text-gray-500">
+			WARNING: this will add all the holidays at once but you'll have to remove them one at a time
+			if there's an issue.
+		</p>
+	</section>
+</main>
+
+<style lang="postcss">
 </style>
